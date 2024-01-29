@@ -1,0 +1,26 @@
+h1 {
+    text-align: center;
+}
+h3 {
+    text-align: center;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 33vw 34vw 33vw;
+}
+.image-gallery {
+    margin-top: 10%;
+}
+figure {
+    text-align: center;
+}
+figcaption {
+    font-style: italic;
+    font-size: .75em;
+}
+footer {
+    margin-top: 10%;
+    margin-bottom: 20px;
+    width: 100%;
+    float: right;
+}

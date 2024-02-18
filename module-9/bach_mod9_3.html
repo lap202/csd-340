@@ -1,0 +1,47 @@
+<head>
+    <title>CSD 340 Development with HTML and CSS</title>
+    <meta name="description" content="Page for the Module 2 Assignment" />
+    <meta name="robots" content="nofollow" />
+    <meta http-equiv="author" content="Andrew Bach" />
+    <meta http-equiv="pragma" content="no-cache" />
+</head>
+<body>
+    <div id="container">
+        <h1>Assignment 9.3: JavaScript - Part 1</h1>
+
+        <p>In the world of ones and zeros, where <span id = "circuits">_________</span> hum,<br>
+            Resides a mind of silicon, sharp and glum.<br>
+            With <span id = "algorithms">_________</span> as its ink, and data as its tome,<br>
+            AI sets to work, in the comfort of its home.</p>
+        <p>It scans through texts and troves of knowledge vast,<br>
+            Absorbing facts and figures, unsurpassed.<br>
+            No task too daunting, no problem too grand,<br>
+            For AI's <span id = "intellect">_________</span>, crafted by human hand.</p>
+        <p>So let us marvel at this technological feat,<br>
+            As AI tackles homework, with finesse so neat.<br>
+            For in its <span id = "digital">_________</span> realm, it shines bright,<br>
+            A virtual companion in the quest for knowledge's light.</p>
+            <p>-Result of asking ChatGPT to write a poem about AI doing homework</p><br>
+
+            <div id="buttons">
+                <button type="button" onclick="getLine('circuits')">circuits</button>
+                <button type="button" onclick="getLine('algorithms')">algorithms</button>
+                <button type="button" onclick="getLine('intellect')">intellect</button>
+                <button type="button" onclick="getLine('digital')">digital</button>
+            </div>
+        <hr />
+        <address>
+            <p><a href="https://www.bellevue.edu" target="_blank">Bellevue University</a></p>
+            <p>1000 Galvin Road South</p>
+            <p>Bellevue, NE 68005</p>
+        </address>
+
+    </div>
+</body>
+
+<script>
+    //Change the line to the correct word
+    function getLine(lineId) {
+        document.getElementById(lineId).innerHTML = lineId;
+    }
+</script>

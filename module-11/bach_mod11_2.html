@@ -1,0 +1,178 @@
+<head>
+    <title>CSD 340 Development with HTML and CSS</title>
+    <meta name="description" content="Page for the Module 11 Assignment" />
+    <meta name="robots" content="nofollow" />
+    <meta http-equiv="author" content="Andrew Bach" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <!--Bootstrap 5.3-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!----------------->
+
+    <style>
+        .box {
+            min-height: 75vh;
+            background-color: ghostwhite;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 15px;
+        }
+        .listItem {
+            background-color: white;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 15px;
+        }
+        #alertDiv {
+            position: absolute;
+            bottom: 0;
+            left: 25vw;
+            width: 50vw;
+        }
+    </style>
+</head>
+<body style="background-color: lightseagreen;">
+    <div id="container">
+        <h1 class="display-3 text-center mb-3">Assignment 11.2: JavaScript - Part 3</h1>
+        <div class="mb-1" id="alertDiv" >
+        </div>
+        <div class="row">
+            <div class="offset-1 col-10 box">
+                <h1 class="display-4 m-3">Your To-Do List</h1>
+                <p>A basic to-do list program! I opted to not add a display button since it made more sense to call the display function with each change.</p>
+                <ul>
+                    <li>Add an item by typing it in the textbox and clicking "Add Item". </li>
+                    <li>To remove the last item in the list, you can click "Remove Last Item".</li>
+                    <li>You can also remove items by clicking the delete button on the item.</li>
+                    <li>To move an item to completed, simply check the item off on your to-do list.</li>
+                </ul>
+                <form class="form row" onsubmit="event.preventDefault(); AddItem();">
+                    <div class="col-1">
+                        <label class="form-label" for="item">To-do list item</label>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" id="item" name="item" maxlength="255" required>
+                    </div>
+                    <div class="col-7">
+                        <button class="btn btn-outline-info" type="submit">Add Item</button>
+                        <button class="btn btn-outline-danger" onclick="event.preventDefault(); DeleteLastItem();">Remove Last Item</button>
+                    </div>
+                </form>
+                <hr />
+                <div class="row">
+                    <div class="col-6">
+                        <h3>Items to be done</h3>
+                        <div class="row" id="todoList">
+                            <p>No items in your to-do list</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h3>Completed Items</h3>
+                        <div class="row" id="completedList">
+                            <p>No items have been completed</p>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+
+        
+    </div>
+</body>
+
+<script>
+    var toDoList = [];
+    var completedList = [];
+
+    function Display() {
+        todoHtml = "";
+        completedHtml = "";
+
+        //Create a card for each to do list item
+        for(i = 0; i < toDoList.length; i++) {
+            todoHtml += '<div class="offset-1 col-10 d-flex align-items-center listItem mb-3">'
+                    + '<input class="float-start form-check-input" type="checkbox" onChange="Complete(' + i + ')">'
+                    + '<p class="ms-3 mb-0">' + (i + 1) + '. ' + toDoList[i] + '</p>'
+                    + '<button class="btn btn-danger m-1 ms-auto" onclick="DeleteItem(' + i + ')">Delete</button>'
+                    + '</div>';          
+        }
+
+        //Create a card for each completed to do list item
+        for(i = 0; i < completedList.length; i++) {
+            completedHtml += '<div class="offset-1 col-10 d-flex align-items-center listItem mb-3">'
+                    + '<input class="float-start form-check-input" type="checkbox" checked disabled>'
+                    + '<p class="ms-3 mb-0">' + completedList[i] + '</p>'
+                    + '<button class="btn btn-danger m-1 ms-auto" onclick="DeleteCompletedItem(' + i + ')">Delete</button>'
+                    + '</div>';          
+        }
+
+        document.getElementById("todoList").innerHTML = todoHtml;
+        document.getElementById("completedList").innerHTML = completedHtml;
+
+        //If either list is empty, display a message
+        if (toDoList.length == 0) {
+            document.getElementById("todoList").innerHTML = '<p>No items in your to-do list</p>';
+        }
+
+        if (!completedList.length > 0) {
+            document.getElementById("completedList").innerHTML = '<p>No items have been completed</p>';
+        }
+
+        
+    }
+
+    function AddItem(item) {
+        var input = document.getElementById('item');
+        var newItem = input.value;
+
+        if (newItem.length > 0) {
+            toDoList.push(newItem);
+
+            input.value = "";
+
+            DisplayAlert('success', 'Item ' + toDoList.length + ', ' + newItem + ', was added to your to-do list.');
+            
+            Display();
+        } 
+    }
+
+    function Complete(id) {
+        completedList.push(toDoList[id]);
+        DeleteItem(id);
+        DisplayAlert('success', 'Item ' + (id + 1) + ' was completed.')
+        Display();
+    }
+
+    function DeleteItem(id) {
+        toDoList.splice(id, 1);
+        DisplayAlert('success', 'Item ' + (id + 1) + ' was successfully removed from your to-do list.')
+        Display();
+    }
+
+    function DeleteCompletedItem(id) {
+        completedList.splice(id, 1);
+        DisplayAlert('success', 'Item ' + (id + 1) + ' was successfully removed from your completed list.')
+        Display();
+    }
+
+    function DeleteLastItem() {
+        if (toDoList.length > 0) {
+            toDoList.pop();
+            DisplayAlert('success', 'The last item was successfully removed from your to-do list.')
+            Display();
+        }
+        else {
+            DisplayAlert('danger', 'There are no items to remove.');
+        }
+        
+        
+    }
+
+    function DisplayAlert(type, message) {
+        document.getElementById("alertDiv").innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">'
+                                                                + '<div>' + message + '</div>'
+                                                                + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                                                                + '</div>';
+    }
+</script>

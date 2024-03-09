@@ -1,0 +1,47 @@
+h1 {
+    text-align: center;
+}
+h3 {
+    font-weight: 500;
+}
+li {
+    font-weight: 300;
+}
+ol {
+    padding: 10px;
+    list-style-position: inside;
+}
+ul {
+    padding: 10px;
+    list-style: upper-roman inside;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.sideBySideLeft {
+    float: left;
+    width: 45%;
+}
+.sideBySideRight {
+    float: right;
+    width: 45%;
+}
+#footer {
+    margin-top: 60%;
+    margin-bottom: 20px;
+    width: 100%;
+    float: right;
+}
+#favoriteBooks {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    border-color: red;
+}
+#thingsLearned {
+    border-style: dashed;
+    border-width: 1px;
+    border-radius: 15px;
+    border-color: red;
+}
